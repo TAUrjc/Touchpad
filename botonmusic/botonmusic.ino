@@ -33,6 +33,7 @@ void loop(){
       digitalWrite(pinLed13, HIGH);
     //}
   } else {
+     Serial.println("parada");
      digitalWrite(pinLed13, LOW);
   }
   
