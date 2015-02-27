@@ -6,9 +6,12 @@ int pinBoton4 = 4;
 int pinLed11 = 11;
 int pinLed12 = 12;
 int pinLed13 =  13;   
-int estadoBoton2 = 0;
-int estadoBoton3 = 0;  
-int estadoBoton4 = 0;  
+int estadoBoton2Actual = 0;
+int estadoBoton2Anterior = 0;
+int estadoBoton3Actual = 0;
+int estadoBoton3Anterior = 0;
+int estadoBoton4Actual = 0;
+int estadoBoton4Anterior = 0;
  
 void setup() {
 Serial.begin(9600);
@@ -23,34 +26,40 @@ pinMode(pinBoton4, INPUT);
 }
  
 void loop(){
-  estadoBoton2 = digitalRead(pinBoton2);
-  estadoBoton3 = digitalRead(pinBoton3);
-  estadoBoton4 = digitalRead(pinBoton4);
+  estadoBoton2Actual = digitalRead(pinBoton2);
+  estadoBoton3Actual = digitalRead(pinBoton3);
+  estadoBoton4Actual = digitalRead(pinBoton4);
    
-  if (estadoBoton2 == HIGH) {
-    //if(estadoBoton == LOW){
+  if (estadoBoton2Actual == HIGH & estadoBoton2Anterior == LOW) {
        Serial.println("2");
       digitalWrite(pinLed13, HIGH);
-    //}
-  } else {
-     Serial.println("parada");
-     digitalWrite(pinLed13, LOW);
+      estadoBoton2Anterior = estadoBoton2Actual;
   }
   
-  if (estadoBoton3 == HIGH) {
-    //if(estadoBoton == LOW){
-       Serial.println("3");
-      digitalWrite(pinLed12, HIGH);
-    //}
-  } else {
-     digitalWrite(pinLed12, LOW);
+  if(estadoBoton2Actual == LOW){
+      digitalWrite(pinLed13, LOW);
+      estadoBoton2Anterior = estadoBoton2Actual;
   }
-  if (estadoBoton4 == HIGH) {
-    //if(estadoBoton == LOW){
-       Serial.println("4");
+  
+  if (estadoBoton3Actual == HIGH & estadoBoton3Anterior == LOW) {
+      Serial.println("3");
+      digitalWrite(pinLed12, HIGH);
+      estadoBoton3Anterior = estadoBoton3Actual;
+  }
+  
+  if(estadoBoton3Actual == LOW){
+      digitalWrite(pinLed12, LOW);
+      estadoBoton3Anterior = estadoBoton3Actual;
+  }
+  
+  if (estadoBoton4Actual == HIGH & estadoBoton4Anterior == LOW) {
+      Serial.println("4");
       digitalWrite(pinLed11, HIGH);
-    //}
-  } else {
-     digitalWrite(pinLed11, LOW);
+      estadoBoton4Anterior = estadoBoton4Actual;
+  }
+  
+  if(estadoBoton4Actual == LOW){
+      digitalWrite(pinLed11, LOW);
+      estadoBoton4Anterior = estadoBoton4Actual;
   }
 }
