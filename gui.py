@@ -1,12 +1,20 @@
-import gtk, sys
+import gtk, sys, serial
 
 class PyApp(gtk.Window):
    
     def __init__(self):
         super(PyApp, self).__init__()
 
-        def hola(b):
-         print "Hola Mundo"
+        arduino = serial.Serial('/dev/ttyACM0', 9600, timeout = 3.0)
+
+        def b1(b):
+         arduino.write('3\r\n')
+
+        def b1(b):
+         arduino.write('4\r\n')
+
+        def base(b):
+         arduino.write('2\r\n')
         
         self.set_title("Buttons")
         self.set_size_request(400, 300)
@@ -21,7 +29,9 @@ class PyApp(gtk.Window):
         btn3 = gtk.Button("Base")
         btn3.set_sensitive(True)
         btn3.set_size_request(80, 80)
-        btn1.connect('clicked', hola)
+        btn1.connect('clicked', b1)
+        btn2.connect('clicked', b2)
+        btn2.connect('clicked', base)
 
         fixed = gtk.Fixed()
 
