@@ -15,38 +15,41 @@ sound3 = pygame.mixer.Sound('verse3.ogg')
 
 
 def sonido(lineaLeida):
-    try:
-	if (lineaLeida == '2\r\n'):
-	    try:
-		sound1.play(loops = -1);
-		print "ESCRIBO DESPUES DE LA BASE"
-	    except pygame.error, message:
-		print "base" + sound1.name
-		
+    if (lineaLeida == '2\r\n'):
+	try:
+	    sound1.play(loops = -1);
+	    print "ESCRIBO DESPUES DE LA BASE"
+	except pygame.error, message:
+	    print "base" + sound1.name
+	    
 
-	elif lineaLeida == '3\r\n':
-	    try:
-		sound2.play(loops = 0);
-	    except pygame.error, message:
-		print "sound2" + sound2.name
-		
-	elif lineaLeida == '4\r\n':
-	    try:
-		sound3.play(loops = 0);
-	    except pygame.error, message:
-		print "sound3" + sound3.name
-	else:
-	    print "ESTOY LEYENDO BASURA"
-    except OSError:
-	print "Se me ha fastidiao el OS"
-    except serial.serialutil.SerialException:
-	print "Se me ha fastidiao el SERIAL"
+    elif lineaLeida == '3\r\n':
+	try:
+	    sound2.play(loops = 0);
+	except pygame.error, message:
+	    print "sound2" + sound2.name
+	    
+    elif lineaLeida == '4\r\n':
+	try:
+	    sound3.play(loops = 0);
+	except pygame.error, message:
+	    print "sound3" + sound3.name
+    else:
+	print "Error de lectura (Leo cosas raras)"
+
     	
 while True:
-   lineaLeida = arduino.readline()												  
-   if lineaLeida:
-	try:
-	    sonido(lineaLeida)
-	    #thread.start_new_thread(sonido, (lineaLeida, ))
-	except:
-	    print "error: fallo al lanzar el thread"
+   try:
+       lineaLeida = arduino.readline()												  
+       if lineaLeida:
+	    try:
+		sonido(lineaLeida)
+		#thread.start_new_thread(sonido, (lineaLeida, ))
+	    except:
+		print "error: fallo al lanzar el thread"
+   except serial.serialutil.SerialException:
+	print "Error del serial"
+	pass
+   except OSError:
+	print "Error del OS"
+	pass
